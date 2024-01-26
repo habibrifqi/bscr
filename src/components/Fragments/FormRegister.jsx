@@ -1,5 +1,6 @@
 import React from "react";
 import FormInput from "../Elements/Input";
+import { Link } from "react-router-dom";
 
 function FormRegister() {
   return (
@@ -25,6 +26,9 @@ function FormRegister() {
           </button>
           <a href="#">I have account</a>
         </div>
+        <div className="flex gap-1 pt-3 items-center justify-center">
+            <p>you have Account ?  {' '}</p> <Link className='underline text-indigo-600' to="/login">Login</Link>
+         </div>
       </form>
     </>
   );

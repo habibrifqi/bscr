@@ -1,5 +1,6 @@
 import React from "react";
 import FormInput from "../Elements/Input";
+import { Link } from "react-router-dom";
 
 function FormLogin() {
   return (
@@ -18,6 +19,9 @@ function FormLogin() {
           </button>
           <a href="#">Forgot Password</a>
         </div>
+        <div className="flex gap-1 pt-3 items-center justify-center">
+        <p>Don't have an Account?</p> <Link className='underline text-indigo-600' to="/register">Register</Link>
+         </div>
       </form>
     </>
   );

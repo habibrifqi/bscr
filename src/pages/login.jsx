@@ -6,7 +6,7 @@ import FormRegister from "../components/Fragments/FormRegister";
 const LoginPage = () => {
   return (
     <>
-         <AuthLayouts title='login'>
+         <AuthLayouts title='login' type='login'>
             <FormLogin />
         </AuthLayouts>
     </>

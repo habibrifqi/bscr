@@ -5,7 +5,7 @@ import FormRegister from '../components/Fragments/FormRegister'
 const RegisterPage = () => {
   return (
     <>
-        <AuthLayouts title='register'>
+        <AuthLayouts title='register' type='register'>
             <FormRegister/>
         </AuthLayouts>
     </>

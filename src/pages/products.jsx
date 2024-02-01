@@ -1,6 +1,27 @@
 import React from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 
+const products = [
+  {
+    id:1,
+    title:'satu',
+    price:100,
+    images:'1.jpg'
+  },
+  {
+    id:2,
+    title:'dua',
+    price:200,
+    images:'2.jpg'
+  },
+  {
+    id:3,
+    title:'tiga',
+    price:300,
+    images:'3.jpg'
+  }
+]
+
 const ProductsPage = () => {
   return (
     <>
@@ -105,6 +126,17 @@ const ProductsPage = () => {
             <CardProduct.Body price="300">AA DDCC</CardProduct.Body>
               
             </CardProduct>
+
+           
+            
+            {products.map((product) =>(
+              <CardProduct key={product.id}>
+                              
+              <CardProduct.Header image={`/images/${product.images}`}></CardProduct.Header>
+              <CardProduct.Body price={product.price}>{product.title}</CardProduct.Body>
+                
+              </CardProduct>
+            ))}
         </div>
       </section>
     </>

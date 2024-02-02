@@ -4,11 +4,11 @@ const CardProduct = (props) => {
 const { children } = props
   return (
     <>
-      <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
-        <a href="#">
+      <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300  " style={{maxHeight : '300px',overflowY: 'auto' }}>
+     
            {children}
         
-        </a>
+
       </article>
     </>
   );
@@ -30,7 +30,7 @@ const Header = (props) => {
 };
 
 const Body = (props) => {
-    const {children,price} = props
+    const {children,price,addToCart,id} = props
   return(
     <>
       <div className="mt-1 p-2">
@@ -56,7 +56,7 @@ const Body = (props) => {
                   />
                 </svg>
 
-                <button className="text-sm">Add to cart</button>
+                <button className="text-sm" type="button" onClick={() => addToCart(id)}>Add to cart</button>
               </div>
             </div>
           </div>
@@ -64,12 +64,9 @@ const Body = (props) => {
   );
 };
 
-// const Price = () => {
-//   return( )
-// };
 
 CardProduct.Header = Header;
 CardProduct.Body = Body;
-// CardProduct.Price = Price;
+
 
 export default CardProduct;

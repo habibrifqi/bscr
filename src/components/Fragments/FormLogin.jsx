@@ -1,4 +1,4 @@
-import React from "react";
+import {React,useRef,useEffect} from "react";
 import FormInput from "../Elements/Input";
 import { Link } from "react-router-dom";
 
@@ -9,11 +9,18 @@ function FormLogin() {
     localStorage.setItem('password',event.target.password.value)
     window.location.href = '/produk'
   }
+
+  const emailRef =useRef(null)
+
+  useEffect(()=>{
+    emailRef.current.focus();
+  },[])
+
   return (
     <>
       <form onSubmit={handleLogin} >
         <div>
-          <FormInput name="email" type="email" placeholder="email@mail" />
+          <FormInput name="email" type="email" placeholder="email@mail" ref={emailRef}/>
           <p className="text-sm mt-2 px-2 hidden text-gray-600">Text helper</p>
         </div>
         <div>

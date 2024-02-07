@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState,useRef } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
 const products = [
@@ -100,6 +100,18 @@ const ProductsPage = () => {
       setCart([...cart, { id, qty: 1 }]);
     }
   };
+
+  const totalPriceRef = useRef(null)
+
+  useEffect(()=>{
+    if (cart.length > 0) {
+      totalPriceRef.current.style.display = "block"
+    }else{
+      totalPriceRef.current.style.display = "none"
+    }
+  },[cart])
+
+
   const handleLogout = () => {
     console.log("asd");
 
@@ -256,12 +268,9 @@ const ProductsPage = () => {
                 );
               })}
 
-              <div className="flex items-center justify-between pt-16">
-                <p className="text-base leading-none text-gray-800 dark:text-white"></p>
-                <p className="text-base leading-none text-gray-800 dark:text-white"></p>
-              </div>
+              
             </div>
-            <div>
+            <div ref={totalPriceRef}>
               <div className="flex items-center pb-6 justify-between lg:pt-5 pt-20">
                 <p className="text-2xl leading-normal text-gray-800 dark:text-white">
                   Total

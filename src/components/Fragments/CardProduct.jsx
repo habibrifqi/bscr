@@ -4,7 +4,7 @@ const CardProduct = (props) => {
 const { children } = props
   return (
     <>
-      <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300  " style={{maxHeight : '300px',overflowY: 'auto' }}>
+      <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300  " style={{maxHeight : '500px',overflowY: 'auto' }}>
      
            {children}
         
@@ -18,9 +18,9 @@ const Header = (props) => {
     const {image} = props
   return (
     <>
-      <div className="relative flex items-end overflow-hidden rounded-xl h-40 ">
+      <div className="relative flex items-end overflow-hidden rounded-xl">
         <img
-          className="object-cover w-full h-full"
+          className="object-cover h-70 w-full"
           src= {image}
           alt="Hotel Photo"
         />

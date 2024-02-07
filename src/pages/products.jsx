@@ -1,84 +1,87 @@
-import { React, useEffect, useState,useRef } from "react";
+import { React, useEffect, useState, useRef } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
-const products = [
-  {
-    id: 1,
-    title: "satu",
-    price: 100,
-    images: "3.jpg",
-  },
-  {
-    id: 2,
-    title: "dua",
-    price: 200,
-    images: "3.jpg",
-  },
-  {
-    id: 3,
-    title: "tiga",
-    price: 300,
-    images: "3.jpg",
-  },
-  {
-    id: 4,
-    title: "empat",
-    price: 300,
-    images: "3.jpg",
-  },
-  // {
-  //   id: 5,
-  //   title: "tiga",
-  //   price: 300,
-  //   images: "3.jpg",
-  // },
-  // {
-  //   id: 6,
-  //   title: "tiga",
-  //   price: 300,
-  //   images: "3.jpg",
-  // },
-  // {
-  //   id: 7,
-  //   title: "tiga",
-  //   price: 300,
-  //   images: "3.jpg",
-  // },
-  // {
-  //   id: 8,
-  //   title: "tiga",
-  //   price: 300,
-  //   images: "3.jpg",
-  // },
-  // {
-  //   id: 9,
-  //   title: "tiga",
-  //   price: 300,
-  //   images: "3.jpg",
-  // },
-  // {
-  //   id: 10,
-  //   title: "tiga",
-  //   price: 300,
-  //   images: "3.jpg",
-  // },
-  // {
-  //   id: 11,
-  //   title: "tiga",
-  //   price: 300,
-  //   images: "3.jpg",
-  // },
-];
+import { getProduct } from "../services/product.service";
+// const products = [
+//   {
+//     id: 1,
+//     title: "satu",
+//     price: 100,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 2,
+//     title: "dua",
+//     price: 200,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 3,
+//     title: "tiga",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 4,
+//     title: "empat",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 5,
+//     title: "tiga",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 6,
+//     title: "tiga",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 7,
+//     title: "tiga",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 8,
+//     title: "tiga",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 9,
+//     title: "tiga",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 10,
+//     title: "tiga",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+//   {
+//     id: 11,
+//     title: "tiga",
+//     price: 300,
+//     images: "3.jpg",
+//   },
+// ];
 const email = localStorage.getItem("email");
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [ products, setProducts ] = useState([]);
+
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
   }, []);
 
   useEffect(() => {
-    if (cart.length > 0) {
+    if (products.length > 0 && cart.length > 0) {
       const sum = cart.reduce((acc, item) => {
         const product = products.find((product) => product.id === item.id);
         return acc + product.price * item.qty;
@@ -87,7 +90,7 @@ const ProductsPage = () => {
       setTotalPrice(sum);
       localStorage.setItem("cart", JSON.stringify(cart));
     }
-  }, [cart]);
+  }, [cart,products]);
 
   const handleAddToCart = (id) => {
     if (cart.find((item) => item.id === id)) {
@@ -101,16 +104,21 @@ const ProductsPage = () => {
     }
   };
 
-  const totalPriceRef = useRef(null)
+  const totalPriceRef = useRef(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (cart.length > 0) {
-      totalPriceRef.current.style.display = "block"
-    }else{
-      totalPriceRef.current.style.display = "none"
+      totalPriceRef.current.style.display = "block";
+    } else {
+      totalPriceRef.current.style.display = "none";
     }
-  },[cart])
+  }, [cart]);
 
+  useEffect(() => {
+    getProduct((data) => {
+      setProducts(data)
+    });
+  }, []);
 
   const handleLogout = () => {
     console.log("asd");
@@ -224,20 +232,21 @@ const ProductsPage = () => {
       {/* <!-- Product List --> */}
       <section className="py-10 bg-gray-100 lg:flex ">
         <div className="mx-auto grid max-w-6xl  grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {products.map((product) => (
-            <CardProduct key={product.id}>
-              <CardProduct.Header
-                image={`/images/${product.images}`}
-              ></CardProduct.Header>
-              <CardProduct.Body
-                price={product.price}
-                id={product.id}
-                addToCart={handleAddToCart}
-              >
-                {product.title}
-              </CardProduct.Body>
-            </CardProduct>
-          ))}
+          {products.length > 0 &&
+            products.map((product) => (
+              <CardProduct key={product.id}>
+                <CardProduct.Header
+                  image={`${product.image}`}
+                ></CardProduct.Header>
+                <CardProduct.Body
+                  price={product.price}
+                  id={product.id}
+                  addToCart={handleAddToCart}
+                >
+                  {product.title}
+                </CardProduct.Body>
+              </CardProduct>
+            ))}
         </div>
         <div className="lg:w-96 md:w-8/12 w-full bg-gray-100 dark:bg-gray-900 h-full relative">
           <div className="flex flex-col lg:h-screen h-auto lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6 justify-between overflow-y-auto">
@@ -245,30 +254,29 @@ const ProductsPage = () => {
               <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800 dark:text-white">
                 Summary
               </p>
-              {cart.map((item) => {
-                const product = products.find(
-                  (product) => product.id === item.id
-                );
+              {products.length > 0 &&
+                cart.map((item) => {
+                  const product = products.find(
+                    (product) => product.id === item.id
+                  );
 
-                return (
-                  <div
-                    className="flex items-center justify-between pt-16"
-                    key={item.id}
-                  >
-                    <p className="text-base leading-none text-gray-800 dark:text-white">
-                      {product.title}
-                    </p>
-                    <p className="text-base leading-none text-gray-800 dark:text-white">
-                      {item.qty}
-                    </p>
-                    <p className="text-base leading-none text-gray-800 dark:text-white">
-                      {item.qty * product.price}
-                    </p>
-                  </div>
-                );
-              })}
-
-              
+                  return (
+                    <div
+                      className="flex items-center justify-between pt-16"
+                      key={item.id}
+                    >
+                      <p className="text-base leading-none text-gray-800 dark:text-white">
+                        {product.title}
+                      </p>
+                      <p className="text-base leading-none text-gray-800 dark:text-white">
+                        {item.qty}
+                      </p>
+                      <p className="text-base leading-none text-gray-800 dark:text-white">
+                        {item.qty * product.price}
+                      </p>
+                    </div>
+                  );
+                })}
             </div>
             <div ref={totalPriceRef}>
               <div className="flex items-center pb-6 justify-between lg:pt-5 pt-20">

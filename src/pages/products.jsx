@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
 const products = [
@@ -22,7 +22,7 @@ const products = [
   },
   {
     id: 4,
-    title: "tiga",
+    title: "empat",
     price: 300,
     images: "3.jpg",
   },
@@ -71,24 +71,35 @@ const products = [
 ];
 const email = localStorage.getItem("email");
 const ProductsPage = () => {
-  const [ cart, setCart ] = useState([
-    {
-      id:1,
-      qty: 1,
-    },
-  ]);
-  const handleAddToCart = (id) =>{
-    if (cart.find(item => item.id === id)) {
-      setCart(
-        cart.map(item => item.id === id ? {...item,qty : item.qty+1 } :item )
-      )
-    }else{
-      setCart([...cart, {id,qty:1}])
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setCart(JSON.parse(localStorage.getItem("cart")) || []);
+  }, []);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      const sum = cart.reduce((acc, item) => {
+        const product = products.find((product) => product.id === item.id);
+        return acc + product.price * item.qty;
+      }, 0);
+
+      setTotalPrice(sum);
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
-    // setCart([...cart,{
-    //   id:productName,qty:1
-    // }])
-  }
+  }, [cart]);
+
+  const handleAddToCart = (id) => {
+    if (cart.find((item) => item.id === id)) {
+      setCart(
+        cart.map((item) =>
+          item.id === id ? { ...item, qty: item.qty + 1 } : item
+        )
+      );
+    } else {
+      setCart([...cart, { id, qty: 1 }]);
+    }
+  };
   const handleLogout = () => {
     console.log("asd");
 
@@ -200,14 +211,17 @@ const ProductsPage = () => {
 
       {/* <!-- Product List --> */}
       <section className="py-10 bg-gray-100 lg:flex ">
-        <div className="mx-auto grid max-w-6xl  grid-cols-2 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-
+        <div className="mx-auto grid max-w-6xl  grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => (
             <CardProduct key={product.id}>
               <CardProduct.Header
                 image={`/images/${product.images}`}
               ></CardProduct.Header>
-              <CardProduct.Body price={product.price} id={product.id} addToCart={handleAddToCart}>
+              <CardProduct.Body
+                price={product.price}
+                id={product.id}
+                addToCart={handleAddToCart}
+              >
                 {product.title}
               </CardProduct.Body>
             </CardProduct>
@@ -219,27 +233,27 @@ const ProductsPage = () => {
               <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800 dark:text-white">
                 Summary
               </p>
-              {/* {cart.map((item) => (
+              {cart.map((item) => {
+                const product = products.find(
+                  (product) => product.id === item.id
+                );
 
-                <div className="flex items-center justify-between pt-16" key={item.id}>
-                  <p className="text-base leading-none text-gray-800 dark:text-white">
-                    {item.id}
-                  </p>
-                  <p className="text-base leading-none text-gray-800 dark:text-white">{item.qty}</p>
-                </div>
-              ))} */}
-              {cart.map((item) =>{
-                const product = products.find((product) =>product.id === item.id)
-
-                return(
-                  <div className="flex items-center justify-between pt-16" key={item.id}>
-                  <p className="text-base leading-none text-gray-800 dark:text-white">
-                    {product.title}
-                  </p>
-                  <p className="text-base leading-none text-gray-800 dark:text-white">{item.qty}</p>
-                  <p className="text-base leading-none text-gray-800 dark:text-white">{item.qty * product.price}</p>
-                </div>
-                )
+                return (
+                  <div
+                    className="flex items-center justify-between pt-16"
+                    key={item.id}
+                  >
+                    <p className="text-base leading-none text-gray-800 dark:text-white">
+                      {product.title}
+                    </p>
+                    <p className="text-base leading-none text-gray-800 dark:text-white">
+                      {item.qty}
+                    </p>
+                    <p className="text-base leading-none text-gray-800 dark:text-white">
+                      {item.qty * product.price}
+                    </p>
+                  </div>
+                );
               })}
 
               <div className="flex items-center justify-between pt-16">
@@ -253,7 +267,7 @@ const ProductsPage = () => {
                   Total
                 </p>
                 <p className="text-2xl font-bold leading-normal text-right text-gray-800 dark:text-white">
-                  ,240
+                  {totalPrice}
                 </p>
               </div>
               <button

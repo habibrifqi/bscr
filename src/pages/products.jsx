@@ -2,6 +2,7 @@ import { React, useEffect, useState, useRef } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
 import { getProduct } from "../services/product.service";
+import { getUsername } from "../services/auth.service";
 // const products = [
 //   {
 //     id: 1,
@@ -70,15 +71,25 @@ import { getProduct } from "../services/product.service";
 //     images: "3.jpg",
 //   },
 // ];
-const email = localStorage.getItem("email");
+
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [ products, setProducts ] = useState([]);
+  const [ username, setUsername ] = useState([]);
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
   }, []);
+
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    if (token) {
+          setUsername(getUsername(token))  
+    }else{
+      window.location.href = "/login"
+    }
+  },[])
 
   useEffect(() => {
     if (products.length > 0 && cart.length > 0) {
@@ -123,8 +134,7 @@ const ProductsPage = () => {
   const handleLogout = () => {
     console.log("asd");
 
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
+    localStorage.removeItem("token");
     window.location.href = "/login";
   };
   return (
@@ -222,7 +232,7 @@ const ProductsPage = () => {
             <circle cx="12" cy="12" r="10"></circle>
             <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
           </svg>
-          <span>{email}</span>
+          <span>{username}</span>
         </a>
       </div>
       <br />

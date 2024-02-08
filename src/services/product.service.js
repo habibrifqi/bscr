@@ -7,6 +7,6 @@ export const getProduct = (callback) => {
       callback(res.data);
     })
     .catch((err) => {
-      console.log(err);
+      callback(err);
     });
 };

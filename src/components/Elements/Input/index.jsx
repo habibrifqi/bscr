@@ -4,7 +4,9 @@ import Label from "./Label";
 
 const  FormInput = forwardRef((props,ref) => {
     const {name,type,placeholder} = props
-
+    if (name == 'password') {
+      
+    }
   return (
     <>
         <div>

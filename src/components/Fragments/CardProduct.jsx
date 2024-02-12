@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CardProduct = (props) => {
 const { children } = props
@@ -15,15 +16,17 @@ const { children } = props
 };
 
 const Header = (props) => {
-    const {image} = props
+    const {image,id} = props
   return (
     <>
       <div className="relative flex items-end overflow-hidden rounded-xl">
+        <Link to={`/produkdetail/${id}`}>
         <img
           className="object-cover h-70 w-full"
           src= {image}
           alt="Hotel Photo"
         />
+        </Link>
       </div>
     </>
   );

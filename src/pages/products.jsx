@@ -242,6 +242,7 @@ const ProductsPage = () => {
               <CardProduct key={product.id}>
                 <CardProduct.Header
                   image={`${product.image}`}
+                  id={product.id}
                 ></CardProduct.Header>
                 <CardProduct.Body
                   price={product.price}

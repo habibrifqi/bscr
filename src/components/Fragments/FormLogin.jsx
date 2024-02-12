@@ -3,6 +3,16 @@ import FormInput from "../Elements/Input";
 import { Link } from "react-router-dom";
 import { login } from "../../services/auth.service";
 import { useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Checkbox,
+  Button,
+} from "@material-tailwind/react";
 
 function FormLogin() {
   const [loginFailed,setLoginFailed] = useState('')
@@ -34,14 +44,40 @@ function FormLogin() {
 
   return (
     <>
-      <form onSubmit={handleLogin} >
-        <div>
+     <Card className="w-96">
+      
+          <form onSubmit={handleLogin} >
+          <CardBody className="flex flex-col gap-4">
           <FormInput name="username" type="text" placeholder="Username" ref={usernameRef}/>
-       
-        </div>
-        <div>
+            {/* <Input label="Password" size="lg" type="password" /> */}
           <FormInput name="password" type="password" placeholder="Password" />
-        </div>
+          {loginFailed &&   <p className="text-sm mt-2 px-2 text-red-600 text-center">{loginFailed}</p>}
+            <div className="-ml-2.5">
+              <Checkbox label="Remember Me" />
+            </div>
+          </CardBody>
+         
+          <CardFooter className="pt-0">
+            <Button variant="gradient" fullWidth>
+              Sign In
+            </Button>
+            <Typography variant="small" className="mt-6 flex justify-center">
+              Don&apos;t have an account?
+              <Typography
+                as="a"
+                href="#signup"
+                variant="small"
+                color="blue-gray"
+                className="ml-1 font-bold"
+              >
+                Sign up
+              </Typography>
+            </Typography>
+          </CardFooter>
+          </form>
+        </Card>
+      {/* <form onSubmit={handleLogin} >
+      
         {loginFailed &&   <p className="text-sm mt-2 px-2 text-red-600 text-center">{loginFailed}</p>}
       
         <div className="flex gap-3 pt-3 items-center">
@@ -52,7 +88,7 @@ function FormLogin() {
           </button>
           <a href="#">Forgot Password</a>
         </div>
-      </form>
+      </form> */}
     </>
   );
 }

@@ -1,15 +1,39 @@
 import React, { Children } from "react";
 import FormLogin from "../Fragments/FormLogin";
 import { Link } from "react-router-dom";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Checkbox,
+  Button,
+} from "@material-tailwind/react";
 
 const AuthLayouts = (props) => {
   const { children, title, type } = props;
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen from-purple-900 via-indigo-800 to-indigo-500 bg-gradient-to-br">
-        <div className="w-full max-w-lg px-10 py-8 mx-auto bg-white border rounded-lg shadow-2xl">
+     <div className="flex items-center justify-center h-screen bg-gray-100">
+<Card className="w-96">
+    <CardHeader
+                variant="gradient"
+                color="gray"
+                className="mb-4 grid h-28 place-items-center"
+              >
+                <Typography variant="h3" color="white">
+                {title}
+                </Typography>
+              </CardHeader>
+              {children}
+  </Card>
+  </div>
+      {/* <div className="flex items-center justify-center min-h-screen from-purple-900 via-indigo-800 to-indigo-500 bg-gradient-to-br">
+       
           <h3 className="text-lg font-semibold text-center">
-            &#128540;{title}
+            {title}
           </h3>
           <div className="max-w-md mx-auto space-y-3">
             {children}
@@ -31,8 +55,7 @@ const AuthLayouts = (props) => {
               )}
             </div>
           </div>
-        </div>
-      </div>
+        </div> */}
     </>
   );
 };

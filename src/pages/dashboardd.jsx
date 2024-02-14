@@ -30,10 +30,11 @@ const DashboardPage = () => {
               Sign In
             </Typography>
           </CardHeader>
+          <form action="">
           <CardBody className="flex flex-col gap-4">
             <Input label="Email" size="lg" />
             {/* <Input label="Password" size="lg" type="password" /> */}
-            <input
+            <Input
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
@@ -93,6 +94,7 @@ const DashboardPage = () => {
               </Typography>
             </Typography>
           </CardFooter>
+          </form>
         </Card>
       </div>
     </>

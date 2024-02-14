@@ -34,61 +34,38 @@ function FormLogin() {
     })
   }
 
-  
+  const containerRef  = useRef()
 
-  const usernameRef =useRef(null)
+  useEffect(() => {
+    if (containerRef.current) {
+      const inputElement = containerRef.current.querySelector("input");
+      if (inputElement) {
+        inputElement.focus();
+      }
+    }
+  }, [containerRef]);
 
-  useEffect(()=>{
-    usernameRef.current.focus();
-  },[])
 
   return (
     <>
-     <Card className="w-96">
-      
-          <form onSubmit={handleLogin} >
+      <form onSubmit={handleLogin}>
           <CardBody className="flex flex-col gap-4">
-          <FormInput name="username" type="text" placeholder="Username" ref={usernameRef}/>
-            {/* <Input label="Password" size="lg" type="password" /> */}
+          <FormInput name="username" type="text" placeholder="Username" ref={containerRef} />
+
           <FormInput name="password" type="password" placeholder="Password" />
-          {loginFailed &&   <p className="text-sm mt-2 px-2 text-red-600 text-center">{loginFailed}</p>}
+          
             <div className="-ml-2.5">
               <Checkbox label="Remember Me" />
             </div>
           </CardBody>
-         
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
+            <Button type="submit" variant="gradient" fullWidth>
               Sign In
             </Button>
-            <Typography variant="small" className="mt-6 flex justify-center">
-              Don&apos;t have an account?
-              <Typography
-                as="a"
-                href="#signup"
-                variant="small"
-                color="blue-gray"
-                className="ml-1 font-bold"
-              >
-                Sign up
-              </Typography>
-            </Typography>
+            
           </CardFooter>
+          
           </form>
-        </Card>
-      {/* <form onSubmit={handleLogin} >
-      
-        {loginFailed &&   <p className="text-sm mt-2 px-2 text-red-600 text-center">{loginFailed}</p>}
-      
-        <div className="flex gap-3 pt-3 items-center">
-          <button className="border hover:border-indigo-600 px-4 py-2 rounded-lg shadow ring-1 ring-inset ring-gray-300"
-          type="submit"
-          >
-            Login
-          </button>
-          <a href="#">Forgot Password</a>
-        </div>
-      </form> */}
     </>
   );
 }

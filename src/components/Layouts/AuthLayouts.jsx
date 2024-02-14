@@ -17,45 +17,43 @@ const AuthLayouts = (props) => {
   return (
     <>
      <div className="flex items-center justify-center h-screen bg-gray-100">
-<Card className="w-96">
-    <CardHeader
-                variant="gradient"
-                color="gray"
-                className="mb-4 grid h-28 place-items-center"
-              >
-                <Typography variant="h3" color="white">
-                {title}
-                </Typography>
-              </CardHeader>
-              {children}
-  </Card>
-  </div>
-      {/* <div className="flex items-center justify-center min-h-screen from-purple-900 via-indigo-800 to-indigo-500 bg-gradient-to-br">
-       
-          <h3 className="text-lg font-semibold text-center">
-            {title}
-          </h3>
-          <div className="max-w-md mx-auto space-y-3">
-            {children}
-            <div className="flex gap-1 pt-3 items-center justify-center">
-              <p>
-                {type === "login"
-                  ? "Don't have an Account?"
+        <Card className="w-96">
+          <CardHeader
+            variant="gradient"
+            color="gray"
+            className="mb-4 grid h-28 place-items-center"
+          >
+            <Typography variant="h3" color="white">
+             {title}
+            </Typography>
+          </CardHeader>
+        {children}
+        {/* <CardFooter> */}
+            <Typography variant="small" className="pb-4 flex justify-center">
+            {type === "login"
+                  ? `Don't have an account?`
                   : " Already have an ancount ?"}
-              </p>
-              {type === "login" && (
-                <Link className="underline text-indigo-600" to="/register">
-                  Register
+              {/* <Typography
+                
+                variant="small"
+                color="blue-gray"
+                className="ml-1 font-bold"
+              > */}
+                 {type === "login" && (
+                <Link    className="ml-1 font-bold" to="/register">
+                  Sign up
                 </Link>
               )}
               {type === "register" && (
-                <Link className="underline text-indigo-600" to="/login">
+                <Link    className="ml-1 font-bold" to="/login">
                   Login
                 </Link>
               )}
-            </div>
-          </div>
-        </div> */}
+              {/* </Typography> */}
+            </Typography>
+          {/* </CardFooter> */}
+        </Card>
+      </div>
     </>
   );
 };

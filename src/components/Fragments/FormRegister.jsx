@@ -1,31 +1,52 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import FormInput from "../Elements/Input";
 import { Link } from "react-router-dom";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Checkbox,
+  Button,
+} from "@material-tailwind/react";
 
 function FormRegister() {
+  const containerRef = useRef();
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const inputElement = containerRef.current.querySelector("input");
+      if (inputElement) {
+        inputElement.focus();
+      }
+    }
+  }, [containerRef]);
+
   return (
     <>
       <form action="">
-      <div>
-          <FormInput name="text" type="text" placeholder="full name" />
-          <p className="text-sm mt-2 px-2 hidden text-gray-600">Text helper</p>
-        </div>
-        <div>
+        <CardBody className="flex flex-col gap-4">
+          <FormInput
+            name="username"
+            type="text"
+            placeholder="full name"
+            ref={containerRef}
+          />
           <FormInput name="email" type="email" placeholder="email@mail" />
-          <p className="text-sm mt-2 px-2 hidden text-gray-600">Text helper</p>
-        </div>
-        <div>
-        <FormInput name="password" type="password" placeholder="Password" />
-        </div>
-        <div>
-        <FormInput name="password_confirm" type="password" placeholder="Confirm Password" />
-        </div>
-        <div className="flex gap-3 pt-3 items-center">
-          <button className="border hover:border-indigo-600 px-4 py-2 rounded-lg shadow ring-1 ring-inset ring-gray-300">
-            Register
-          </button>
-          <a href="#">I have account</a>
-        </div>
+          <FormInput name="password" type="password" placeholder="Password" />
+          <FormInput
+            name="password_confirm"
+            type="password"
+            placeholder="Confirm Password"
+          />
+        </CardBody>
+        <CardFooter className="pt-0">
+          <Button type="submit" variant="gradient" fullWidth>
+            Sign In
+          </Button>
+        </CardFooter>
       </form>
     </>
   );

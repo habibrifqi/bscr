@@ -16,8 +16,8 @@ const router = createBrowserRouter([
   {
     path: "/",
     // element: <div>Hello Wordl</div>,
-    element: <DashboardPage/>
-    // errorElement: <ErrorPage/>
+    element: <DashboardPage/>,
+    errorElement: <ErrorPage/>
   },
   {
     path: "/login",
